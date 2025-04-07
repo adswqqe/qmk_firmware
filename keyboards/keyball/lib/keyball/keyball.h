@@ -86,6 +86,16 @@ enum keyball_keycodes {
     SCRL_DVI = QK_KB_8, // Increment scroll divider
     SCRL_DVD = QK_KB_9, // Decrement scroll divider
 
+    SSNP_VRT = QK_KB_13, // Set scroll snap mode as vertical
+    SSNP_HOR = QK_KB_14, // Set scroll snap mode as horizontal
+    SSNP_FRE = QK_KB_15, // Set scroll snap mode as disable (free scroll)
+
+    // Auto mouse layer control keycodes.
+    // Only works when POINTING_DEVICE_AUTO_MOUSE_ENABLE is defined.
+    AML_TO  = QK_KB_10, // Toggle automatic mouse layer
+    AML_I50 = QK_KB_11, // Increment automatic mouse layer timeout
+    AML_D50 = QK_KB_12, // Decrement automatic mouse layer timeout
+
     // User customizable 32 keycodes.
     KEYBALL_SAFE_RANGE = QK_USER_0,
 };

@@ -27,6 +27,14 @@ const uint8_t CPI_DEFAULT    = KEYBALL_CPI_DEFAULT / 100;
 const uint8_t CPI_MAX        = pmw3360_MAXCPI + 1;
 const uint8_t SCROLL_DIV_MAX = 7;
 
+const uint16_t AML_TIMEOUT_MIN = 100;
+const uint16_t AML_TIMEOUT_MAX = 1000;
+const uint16_t AML_TIMEOUT_QU  = 50; // Quantization Unit
+
+//static const char BL                  = '\xB0'; // Blank indicator character
+//static const char LFSTR_ON[] PROGMEM  = "\xB2\xB3";
+//static const char LFSTR_OFF[] PROGMEM = "\xB4\xB5";
+
 keyball_t keyball = {
     .this_have_ball = false,
     .that_enable    = false,
@@ -566,6 +574,31 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
             case SCRL_DVD:
                 add_scroll_div(-1);
                 break;
+#if KEYBALL_SCROLLSNAP_ENABLE == 2
+            case SSNP_HOR:
+                keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_HORIZONTAL);
+                break;
+            case SSNP_VRT:
+                keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_VERTICAL);
+                break;
+            case SSNP_FRE:
+                keyball_set_scrollsnap_mode(KEYBALL_SCROLLSNAP_MODE_FREE);
+                break;
+#endif
+
+#ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
+            case AML_TO:
+                set_auto_mouse_enable(!get_auto_mouse_enable());
+                break;
+            case AML_I50: {
+                uint16_t v = get_auto_mouse_timeout() + 50;
+                set_auto_mouse_timeout(MIN(v, AML_TIMEOUT_MAX));
+            } break;
+            case AML_D50: {
+                uint16_t v = get_auto_mouse_timeout() - 50;
+                set_auto_mouse_timeout(MAX(v, AML_TIMEOUT_MIN));
+            } break;
+#endif
 
             default:
                 return true;
