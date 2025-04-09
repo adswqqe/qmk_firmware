@@ -22,13 +22,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Tap Dance declarations
 enum {
-    TD_ESC_CAPS,
+    TD_ESC_CAPS, TD_BTN1_MINS, TD_ENT_EQL };
+
+enum custom_keycodes {
+    CST = SAFE_RANGE,
 };
 
 // Tap Dance definitions
 tap_dance_action_t tap_dance_actions[] = {
     // Tap once for Escape, twice for Caps Lock
     [TD_ESC_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_ESC, KC_CAPS),
+    [TD_BTN1_MINS] = ACTION_TAP_DANCE_DOUBLE(KC_BTN1, KC_MINUS),
+    [TD_ENT_EQL]   = ACTION_TAP_DANCE_DOUBLE(KC_ENT, KC_EQUAL),
+
 };
 
 // clang-format off
@@ -36,32 +42,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
     KC_ESC   , LT(0, KC_1)    , LT(0, KC_2)     , LT(0, KC_3), LT(0, KC_4)  , LT(0, KC_5), LT(0, KC_6) ,                                  LT(0, KC_7)     , LT(0, KC_8)     , LT(0, KC_9)     , LT(0, KC_0)     , LT(0, KC_BSPC)  ,
     KC_TAB   , LT(0, KC_Q)     , LT(0, KC_W)     , LT(0, KC_E)     , LT(0, KC_R)     , LT(0, KC_T)     ,                                  LT(0, KC_Y)     , LT(0, KC_U)     , LT(0, KC_I)     , LT(0, KC_O)     , LT(0, KC_P)     , LT(0, KC_NUBS)  ,
-    LT(0, KC_GRV)   , LT(0, KC_A)     , LT(0, KC_S)     , LT(0, KC_D)     , LT(0, KC_F)     , LT(0, KC_G)     ,                                  LT(0, KC_H)     , LT(0, KC_J)     , LT(0, KC_K)     , LT(0, KC_L)     , LT(0, KC_SCLN)  , LT(0, KC_QUOT)  ,
-    KC_LSFT    , LT(0, KC_Z)     , LT(0, KC_X)     , LT(0, KC_C)     , LT(0, KC_V)     , LT(0, KC_B)     , LT(0, KC_RBRC)  ,  KC_NUHS     , LT(0, KC_N)     , LT(0, KC_M)     , LT(0, KC_COMM)  , LT(0, KC_DOT)   , LT(0, KC_SLSH)  , KC_RSFT  ,
-    KC_LCTL  , KC_LGUI  , KC_LALT  , MO(1)     , SCRL_MO   , KC_SPC    ,LT(0,KC_BTN1),                                      KC_ENT          , KC_LNG1         , _______         , _______         , _______         , KC_RALT  , MO(2)
-  ),
+    MO(1)   , LT(0, KC_A)     , LT(0, KC_S)     , LT(0, KC_D)     , LT(0, KC_F)     , LT(0, KC_G)     ,                                  LT(0, KC_H)     , LT(0, KC_J)     , LT(0, KC_K)     , LT(0, KC_L)     , LT(0, KC_SCLN)  , LT(0, KC_QUOT)  ,
+    KC_LSFT    , LT(0, KC_Z)     , LT(0, KC_X)     , LT(0, KC_C)     , LT(0, KC_V)     , LT(0, KC_B)     , LT(0, KC_LBRC)  ,            LT(0, KC_RBRC)     , LT(0, KC_N)     , LT(0, KC_M)     , LT(0, KC_COMM)  , LT(0, KC_DOT)   , LT(0, KC_SLSH)  , KC_RSFT  ,
+    KC_LCTL  , KC_LGUI  , KC_LALT  , CST     , SCRL_MO   , KC_SPC    ,TD(TD_BTN1_MINS),                                                 TD(TD_ENT_EQL)     , KC_LNG1         , _______         , _______         , _______         , KC_RALT  , MO(3)
+  ),    
 
   [1] = LAYOUT_universal(
-    TG(1), S(KC_1)  , KC_LBRC  , S(KC_3)  , S(KC_4)  , S(KC_5)  ,                                  KC_EQL   , S(KC_6)  ,S(KC_QUOT), S(KC_8)  , S(KC_9)  ,S(KC_INT1),
-    S(KC_DEL) , S(KC_Q)  , S(KC_W)  , S(KC_E)  , S(KC_R)  , S(KC_T)  ,                                  S(KC_Y)  , S(KC_U)  , S(KC_I)  , S(KC_O)  , S(KC_P)  ,S(KC_INT3),
-    AML_D50  , S(KC_A)  , S(KC_S)  , S(KC_D)  , S(KC_F)  , S(KC_G)  ,                                  S(KC_H)  , S(KC_J)  , S(KC_K)  , S(KC_L)  , KC_QUOT  , S(KC_2)  ,
-    AML_I50  , S(KC_Z)  , S(KC_X)  , S(KC_C)  , S(KC_V)  , S(KC_B)  ,S(KC_RBRC),           S(KC_NUHS), S(KC_N)  , S(KC_M)  ,S(KC_COMM), S(KC_DOT),S(KC_SLSH),S(KC_RSFT),
-    AML_TO  ,S(KC_LCTL),S(KC_LALT),S(KC_LGUI), _______  , _______  , _______  ,            _______  , _______  , _______  ,S(KC_RGUI), _______  , S(KC_RALT), _______
+    KC_ESC, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,                                              KC_F6   , KC_F7  ,KC_F8, KC_F9  , KC_F10  ,KC_DEL,
+    KC_TAB , S(KC_Q)  , S(KC_W)  , S(KC_E)  , S(KC_R)  , S(KC_T)  ,                                  KC_PAGE_UP  , KC_HOME  , KC_UP  , KC_END  , KC_PRINT_SCREEN  ,KC_F12,
+    AML_D50  , S(KC_A)  , S(KC_S)  , S(KC_D)  , S(KC_F)  , S(KC_G)  ,                                  KC_PAGE_DOWN  , KC_LEFT  , KC_DOWN  ,KC_RGHT  , KC_QUOT  , S(KC_2)  ,
+    KC_LSFT  , S(KC_Z)  , S(KC_X)  , S(KC_C)  , S(KC_V)  , S(KC_B)  ,S(KC_RBRC),           S(KC_NUHS), S(KC_N)  , S(KC_M)  ,S(KC_COMM), S(KC_DOT),S(KC_SLSH),S(KC_RSFT),
+    KC_LCTL  ,S(KC_LCTL),S(KC_LALT),S(KC_LGUI), _______  , _______  , _______  ,            _______  , _______  , _______  ,S(KC_RGUI), _______  , S(KC_RALT), _______
   ),
 
   [2] = LAYOUT_universal(
     KBC_SAVE  , KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    ,                                  KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_F11   ,
-    SCRL_MO  , _______  , KC_7     , KC_8     , KC_9     , _______  ,                                  _______  , KC_LEFT  , KC_UP    , KC_RGHT  , _______  , KC_F12   ,
-    A(KC_LEFT)  , A(KC_RGHT)  , KC_4     , KC_5     , KC_6     ,S(KC_SCLN),                                  KC_PGUP  , KC_BTN1  , KC_BTN3  , KC_BTN2  , KC_BTN3  , _______  ,
+    SCRL_MO  , _______  , KC_7     , KC_8     , KC_9     , _______  ,                                  _______  , KC_LEFT  , KC_UP    , KC_RGHT  , KC_DEL  , KC_F12   ,
+    A(KC_LEFT)  , A(KC_LEFT)  , A(KC_RGHT)     , KC_5     , KC_6     ,S(KC_SCLN),                                  KC_PGUP  , KC_BTN1  , KC_BTN3  , KC_BTN2  , KC_BTN3  , _______  ,
     _______  , _______  , KC_1     , KC_2     , KC_3     ,S(KC_MINS), S(KC_8)  ,            S(KC_9)  , KC_PGDN  , _______  , _______  , _______  , _______  , _______  ,
-    _______  , _______  , KC_0     , KC_DOT   , _______  , _______  , _______  ,             KC_DEL  , _______  , _______  , _______  , _______  , _______  , _______
+    _______  , _______  , KC_0     , KC_DOT   , SCRL_MO  , _______  , LT(0, KC_BTN1)  ,             KC_DEL  , _______  , _______  , _______  , _______  , _______  , _______
   ),
 
   [3] = LAYOUT_universal(
     RGB_TOG  , _______  , _______  , _______  , _______  , _______  ,                                  RGB_M_P  , RGB_M_B  , RGB_M_R  , RGB_M_SW , RGB_M_SN , RGB_M_K  ,
-    RGB_MOD  , RGB_HUI  , RGB_SAI  , RGB_VAI  , _______  , _______  ,                                  RGB_M_X  , RGB_M_G  , RGB_M_T  , RGB_M_TW , _______  , _______  ,
-    RGB_RMOD , RGB_HUD  , RGB_SAD  , RGB_VAD  , _______  , _______  ,                                  CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE , KBC_RST  ,
-    _______  , _______  , SCRL_DVD , SCRL_DVI , SCRL_MO  , SCRL_TO  , EE_CLR  ,            EE_CLR  , KC_HOME  , KC_PGDN  , KC_PGUP  , KC_END   , _______  , _______  ,
+    AML_D50  , RGB_HUI  , RGB_SAI  , RGB_VAI  , _______  , _______  ,                                  RGB_M_X  , RGB_M_G  , RGB_M_T  , RGB_M_TW , _______  , _______  ,
+    AML_I50 , RGB_HUD  , RGB_SAD  , RGB_VAD  , _______  , _______  ,                                  CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE , KBC_RST  ,
+    AML_TO  , _______  , SCRL_DVD , SCRL_DVI , SCRL_MO  , SCRL_TO  , EE_CLR  ,            EE_CLR  , KC_HOME  , KC_PGDN  , KC_PGUP  , KC_END   , _______  , _______  ,
     QK_BOOT    , _______  , KC_LEFT  , KC_DOWN  , KC_UP    , KC_RGHT  , _______  ,            _______  , KC_BSPC  , _______  , _______  , _______  , _______  , QK_BOOT
   ),
 };
@@ -90,6 +96,15 @@ void pointing_device_init_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case CST:
+            if (record->event.pressed) {
+                tap_code16(KC_LCTL);
+                tap_code16(KC_LSFT);
+                tap_code16(KC_T);
+                return true;
+            }
+
+            return false;
         case LT(0, KC_1):
             if (record->tap.count && record->event.pressed) {
                 tap_code16(KC_1);
@@ -396,6 +411,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16(KC_BTN1); // Intercept tap function to send Ctrl-C
             } else if (record->event.pressed) {
                 tap_code16(KC_BTN2); // Intercept hold function to send Ctrl-V
+            }
+            return false;
+        case LT(0, KC_RBRC):
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_RBRC); // Intercept tap function to send Ctrl-C
+            } else if (record->event.pressed) {
+                tap_code16(S(KC_RBRC)); // Intercept hold function to send Ctrl-V
+            }
+            return false;
+        case LT(0, KC_LBRC):
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_LBRC); // Intercept tap function to send Ctrl-C
+            } else if (record->event.pressed) {
+                tap_code16(S(KC_LBRC)); // Intercept hold function to send Ctrl-V
             }
             return false;
     }
