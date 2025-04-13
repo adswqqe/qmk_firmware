@@ -40,16 +40,16 @@ tap_dance_action_t tap_dance_actions[] = {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
-    KC_ESC   , LT(0, KC_1)    , LT(0, KC_2)     , LT(0, KC_3), LT(0, KC_4)  , LT(0, KC_5), LT(0, KC_6) ,                                  LT(0, KC_7)     , LT(0, KC_8)     , LT(0, KC_9)     , LT(0, KC_0)     , LT(0, KC_BSPC)  ,
+    KC_ESC   , LT(0, KC_1)    , LT(0, KC_2)     , LT(0, KC_3), LT(0, KC_4)  , LT(0, KC_5), LT(0, KC_6) ,                                  LT(0, KC_7)     , LT(0, KC_8)     , LT(0, KC_9)     , LT(0, KC_0)     , KC_BSPC  ,
     KC_TAB   , LT(0, KC_Q)     , LT(0, KC_W)     , LT(0, KC_E)     , LT(0, KC_R)     , LT(0, KC_T)     ,                                  LT(0, KC_Y)     , LT(0, KC_U)     , LT(0, KC_I)     , LT(0, KC_O)     , LT(0, KC_P)     , LT(0, KC_NUBS)  ,
     MO(1)   , LT(0, KC_A)     , LT(0, KC_S)     , LT(0, KC_D)     , LT(0, KC_F)     , LT(0, KC_G)     ,                                  LT(0, KC_H)     , LT(0, KC_J)     , LT(0, KC_K)     , LT(0, KC_L)     , LT(0, KC_SCLN)  , LT(0, KC_QUOT)  ,
     KC_LSFT    , LT(0, KC_Z)     , LT(0, KC_X)     , LT(0, KC_C)     , LT(0, KC_V)     , LT(0, KC_B)     , LT(0, KC_LBRC)  ,            LT(0, KC_RBRC)     , LT(0, KC_N)     , LT(0, KC_M)     , LT(0, KC_COMM)  , LT(0, KC_DOT)   , LT(0, KC_SLSH)  , KC_RSFT  ,
-    KC_LCTL  , KC_LGUI  , KC_LALT  , CST     , SCRL_MO   , KC_SPC    ,TD(TD_BTN1_MINS),                                                 TD(TD_ENT_EQL)     , KC_LNG1         , _______         , _______         , _______         , KC_RALT  , MO(3)
+    KC_LCTL  , KC_LGUI  , KC_LALT  , CST     , SCRL_MO   , KC_SPC    ,KC_BTN1,                                                 KC_ENT     , KC_LNG1         , _______         , _______         , _______         , KC_RALT  , MO(3)
   ),    
 
   [1] = LAYOUT_universal(
     KC_ESC, KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,                                              KC_F6   , KC_F7  ,KC_F8, KC_F9  , KC_F10  ,KC_DEL,
-    KC_TAB , S(KC_Q)  , S(KC_W)  , S(KC_E)  , S(KC_R)  , S(KC_T)  ,                                  KC_PAGE_UP  , KC_HOME  , KC_UP  , KC_END  , KC_PRINT_SCREEN  ,KC_F12,
+    KC_TAB , LT(0,KC_MINUS)  , LT(0,KC_EQUAL)  , S(KC_E)  , S(KC_R)  , S(KC_T)  ,                                  KC_PAGE_UP  , KC_HOME  , KC_UP  , KC_END  , KC_PRINT_SCREEN  ,KC_F12,
     AML_D50  , KC_LCTL  , KC_LSFT  , S(KC_D)  , S(KC_F)  , S(KC_G)  ,                                  KC_PAGE_DOWN  , KC_LEFT  , KC_DOWN  ,KC_RGHT  , KC_QUOT  , S(KC_2)  ,
     KC_LSFT  , S(KC_Z)  , S(KC_X)  , S(KC_C)  , S(KC_V)  , S(KC_B)  ,S(KC_RBRC),           S(KC_NUHS), S(KC_N)  , S(KC_M)  ,S(KC_COMM), S(KC_DOT),S(KC_SLSH),S(KC_RSFT),
     KC_LCTL  ,S(KC_LCTL),S(KC_LALT),S(KC_LGUI), _______  , _______  , _______  ,            _______  , _______  , _______  ,S(KC_RGUI), _______  , S(KC_RALT), _______
@@ -96,6 +96,20 @@ void pointing_device_init_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case LT(0, KC_MINUS):
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_MINUS); // Intercept tap function to send Ctrl-C
+            } else if (record->event.pressed) {
+                tap_code16(S(KC_MINUS)); // Intercept hold function to send Ctrl-V
+            }
+            return false;
+        case LT(0, KC_EQUAL):
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_EQUAL); // Intercept tap function to send Ctrl-C
+            } else if (record->event.pressed) {
+                tap_code16(S(KC_EQUAL)); // Intercept hold function to send Ctrl-V
+            }
+            return false;
         case CST:
             if (record->event.pressed) {
                 tap_code16(C(S(KC_T)));
