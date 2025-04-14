@@ -58,9 +58,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [2] = LAYOUT_universal(
     KBC_SAVE  , KC_F1    , KC_F2    , KC_F3    , KC_F4    , KC_F5    ,                                  KC_F6    , KC_F7    , KC_F8    , KC_F9    , KC_F10   , KC_BSPC   ,
     SCRL_MO  , _______  , KC_7     , KC_8     , KC_9     , _______  ,                                  _______  , KC_LEFT  , KC_UP    , KC_RGHT  , KC_DEL  , KC_F12   ,
-    A(KC_LEFT)  , A(KC_LEFT)  , A(KC_RGHT)     , KC_5     , KC_6     ,S(KC_SCLN),                                  KC_PGUP  , KC_BTN1  , KC_BTN3  , KC_BTN2  , KC_BTN3  , _______  ,
+    MO(1)  , A(KC_LEFT)  , A(KC_RGHT)     , KC_5     , KC_6     ,S(KC_SCLN),                                  KC_PGUP  , KC_BTN1  , KC_BTN3  , KC_BTN2  , KC_BTN3  , _______  ,
     KC_LSFT  , KC_Z  , KC_X     , KC_C    , KC_V    ,S(KC_MINS), S(KC_8)  ,            S(KC_9)  , KC_PGDN  , _______  , _______  , _______  , _______  , _______  ,
-    KC_LCTL  , _______  , KC_0     , KC_DOT   , SCRL_MO  , _______  , LT(0, KC_BTN1)  ,             KC_DEL  , _______  , _______  , _______  , _______  , _______  , _______
+    KC_LCTL  , _______  , KC_0     , KC_DOT   , SCRL_MO  , _______  , KC_BTN1  ,             KC_DEL  , _______  , _______  , _______  , _______  , _______  , _______
   ),
 
   [3] = LAYOUT_universal(
